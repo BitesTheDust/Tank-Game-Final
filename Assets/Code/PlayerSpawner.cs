@@ -18,7 +18,7 @@ namespace TankGame
 			yield return new WaitForSeconds( _waitToSpawn );
 
 			PlayerUnit unit = _playerUnit.GetPooledObject();
-			if( unit != null && unit.Lives > 0 )
+			if( unit != null && GameManager.Instance.Lives > 0 )
 			{
 				PlacePlayer( unit, _respawnPosition, _respawnRotation );
 			}

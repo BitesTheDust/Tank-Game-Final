@@ -11,8 +11,6 @@ namespace TankGame.UI
 		[SerializeField]
 		private Text _text;
 
-		private PlayerUnit _unit;
-
 		private const string LivesKey = "lives";
 
 		protected void OnDestroy()
@@ -25,9 +23,10 @@ namespace TankGame.UI
 			Debug.Log( "Lives UI initialized" );
 			
 			l10n.LanguageLoaded += OnLanguageLoaded;
-			_unit = GameManager.Instance.PlayerUnit as PlayerUnit;
-			_unit.LivesLost += OnLivesLost;
-			SetText( _unit.Lives );
+			// Unit unit 
+			// _unit = GameManager.Instance.PlayerUnit as PlayerUnit;
+			GameManager.Instance.LivesLost += OnLivesLost;
+			SetText( GameManager.Instance.Lives );
 		}
 
 		private void OnLanguageLoaded( LangCode currentLanguage)
@@ -38,7 +37,7 @@ namespace TankGame.UI
 		private void UnregisterEventListeners()
 		{
 			l10n.LanguageLoaded -= OnLanguageLoaded;
-			_unit.LivesLost -= OnLivesLost;
+			GameManager.Instance.LivesLost -= OnLivesLost;
 		}
 
 		private void OnLivesLost( int lives )
@@ -46,11 +45,11 @@ namespace TankGame.UI
 			SetText( lives );
 		}
 
-		private void SetText( int score )
+		private void SetText( int lives )
 		{
-			string translation = l10n.CurrentLanguage.GetTranslation( ScoreKey );
+			string translation = l10n.CurrentLanguage.GetTranslation( LivesKey );
 
-			_text.text = string.Format( translation, score );
+			_text.text = string.Format( translation, lives );
 		}
 	}
 }

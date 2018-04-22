@@ -12,6 +12,8 @@ namespace TankGame.UI
 
 		public ScoreUI ScoreUI { get; private set; }
 
+		public LivesUI LivesUI { get; private set; }
+
 		public VictoryUI VictoryUI { get; private set; }
 
 		public void Init()
@@ -21,6 +23,8 @@ namespace TankGame.UI
 			HealthUI.Init();
 			ScoreUI = GetComponentInChildren< ScoreUI >();
 			ScoreUI.Init();
+			// LivesUI = GetComponentInChildren< LivesUI >();
+			// LivesUI.Init();
 			VictoryUI = GetComponentInChildren< VictoryUI >();
 			VictoryUI.Init();
 		}
