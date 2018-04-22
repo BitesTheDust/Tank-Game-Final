@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{5D3552FD-BC28-B6F8-0ED6-40F7075E067C}</ProjectGuid>
+    <ProjectGuid>{834C542D-900F-BAE3-8F19-C772C381C1D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -56,7 +56,10 @@
      <Compile Include="Assets\Code\AI\PatrolState.cs" />
      <Compile Include="Assets\Code\AI\ShootState.cs" />
      <Compile Include="Assets\Code\CameraFollow.cs" />
+     <Compile Include="Assets\Code\Collectable.cs" />
+     <Compile Include="Assets\Code\CollectableSpawner.cs" />
      <Compile Include="Assets\Code\EnemyHealth.cs" />
+     <Compile Include="Assets\Code\EnemySpawner.cs" />
      <Compile Include="Assets\Code\EnemyUnit.cs" />
      <Compile Include="Assets\Code\EventTester.cs" />
      <Compile Include="Assets\Code\Examples\ConstructorExample.cs" />
@@ -89,9 +92,11 @@
      <Compile Include="Assets\Code\Persistence\SerializableVector3.cs" />
      <Compile Include="Assets\Code\Persistence\UnitData.cs" />
      <Compile Include="Assets\Code\Persistence\Vector3Surrogate.cs" />
+     <Compile Include="Assets\Code\PlayerSpawner.cs" />
      <Compile Include="Assets\Code\PlayerUnit.cs" />
      <Compile Include="Assets\Code\Pool.cs" />
      <Compile Include="Assets\Code\Projectile.cs" />
+     <Compile Include="Assets\Code\ScoringSystem.cs" />
      <Compile Include="Assets\Code\Tests\GetComponentInHierarchyTester.cs" />
      <Compile Include="Assets\Code\Tests\OperatorTesting.cs" />
      <Compile Include="Assets\Code\Tests\PropertyChangedTester.cs" />
@@ -99,9 +104,12 @@
      <Compile Include="Assets\Code\TransformMover.cs" />
      <Compile Include="Assets\Code\UI\HealthUI.cs" />
      <Compile Include="Assets\Code\UI\HealthUIItem.cs" />
+     <Compile Include="Assets\Code\UI\LivesUI.cs" />
      <Compile Include="Assets\Code\UI\LocalizationUI.cs" />
      <Compile Include="Assets\Code\UI\LocalizedLabel.cs" />
+     <Compile Include="Assets\Code\UI\ScoreUI.cs" />
      <Compile Include="Assets\Code\UI\UI.cs" />
+     <Compile Include="Assets\Code\UI\VictoryUI.cs" />
      <Compile Include="Assets\Code\Unit.cs" />
      <Compile Include="Assets\Code\Utils.cs" />
      <Compile Include="Assets\Code\VectorExtensions.cs" />
@@ -109,6 +117,7 @@
      <Compile Include="Assets\Localization\Language.cs" />
      <Compile Include="Assets\Localization\Localization.cs" />
      <Compile Include="Assets\Localization\LocalizationNotFoundException.cs" />
+     <None Include="Assets\Shaders\CycleColor.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Program Files/Unity_17_2_03/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

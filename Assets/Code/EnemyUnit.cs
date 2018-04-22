@@ -26,6 +26,8 @@ namespace TankGame
 		[SerializeField]
 		private Direction _direction;
 
+		private System.Action< EnemyUnit > _deathCallback;
+
 		private IList<AIStateBase> _states = new List< AIStateBase >();
 
 		public AIStateBase CurrentState { get; private set; }
@@ -57,8 +59,17 @@ namespace TankGame
 			InitStates();
 		}
 
+		public void SpawnerInit( System.Action< EnemyUnit > deathCallback ) 
+		{
+			_deathCallback = deathCallback;
+		}
+
 		private void InitStates()
 		{
+			int random = UnityEngine.Random.Range( 0, 
+				GameManager.Instance.Paths.Count - 1 ); 
+			_path = GameManager.Instance.Paths[random];
+
 			PatrolState patrol = 
 				new PatrolState( this, _path, _direction, _waypointArriveDistance );
 			_states.Add( patrol );
@@ -76,6 +87,12 @@ namespace TankGame
 		protected override void Update()
 		{
 			CurrentState.Update();
+		}
+
+		protected override void HandleUnitDied(Unit unit) 
+		{
+			base.HandleUnitDied( unit );
+			_deathCallback( this );
 		}
 
 		public bool PerformTransition( AIStateType targetState )

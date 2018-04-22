@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TankGame.Persistence;
 using TankGame.Messaging;
+using TankGame.WaypointSystem;
 
 namespace TankGame
 {
@@ -102,7 +103,6 @@ namespace TankGame
 		protected virtual void HandleUnitDied( Unit unit )
 		{
 			GameManager.Instance.MessageBus.Publish( new UnitDiedMessage( this ) );
-			gameObject.SetActive( false );
 		}
 
 		public virtual UnitData GetUnitData()

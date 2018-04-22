@@ -4,8 +4,10 @@ using System.Linq;
 using TankGame.Localization;
 using TankGame.Messaging;
 using TankGame.Persistence;
+using TankGame.Collectable;
 using UnityEngine;
 using L10n = TankGame.Localization.Localization;
+using waypoints = TankGame.WaypointSystem;
 
 namespace TankGame
 {
@@ -30,10 +32,19 @@ namespace TankGame
 
 		public static bool IsClosing { get; private set; }
 
+		public static int WinningScore { get; private set; } 
+
 		#endregion
+
+		[SerializeField] private int _winningScore = 100;
+
+		private List< waypoints.Path > _paths;
+		public List< waypoints.Path > Paths { get { return _paths; } }
 
 		private List< Unit > _enemyUnit = new List< Unit >();
 		private Unit _playerUnit = null;
+		public Unit PlayerUnit { get { return _playerUnit; } }
+
 		private SaveSystem _saveSystem;
 
 		public string SavePath
@@ -42,6 +53,14 @@ namespace TankGame
 		}
 
 		public MessageBus MessageBus { get; private set; }
+
+		public ScoringSystem ScoringSystem { get; private set; }
+
+		private CollectableSpawner _collectableSpawner;
+
+		private PlayerSpawner _playerSpawner;
+
+		private EnemySpawner _enemySpawner;
 
 		protected void Awake()
 		{
@@ -74,16 +93,36 @@ namespace TankGame
 
 			IsClosing = false;
 
+			WinningScore = _winningScore;
+
 			MessageBus = new MessageBus();
 
-			var UI = FindObjectOfType< UI.UI >();
-			UI.Init();
+			ScoringSystem = new ScoringSystem();
+
+			_paths = new List< waypoints.Path >();
+			waypoints.Path[] paths = FindObjectsOfType< waypoints.Path >();
+			foreach( waypoints.Path path in paths ) 
+			{
+				_paths.Add( path );
+			}
 
 			Unit[] allUnits = FindObjectsOfType< Unit >();
 			foreach ( Unit unit in allUnits )
 			{
 				AddUnit( unit );
 			}
+
+			_playerSpawner = FindObjectOfType< PlayerSpawner >();
+			_playerSpawner.Init();
+
+			_collectableSpawner = FindObjectOfType< CollectableSpawner >();
+			_collectableSpawner.Init();
+
+			_enemySpawner = FindObjectOfType< EnemySpawner >();
+			_enemySpawner.Init();
+
+			var UI = FindObjectOfType< UI.UI >();
+			UI.Init();
 
 			_saveSystem = new SaveSystem( new BinaryPersitence( SavePath ) );
 		}
@@ -123,7 +162,7 @@ namespace TankGame
 		{
 			unit.Init();
 
-			if ( unit is EnemyUnit )
+			if ( unit is EnemyUnit && !_enemyUnit.Contains( unit ) )
 			{
 				_enemyUnit.Add( unit );
 			}

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{1FA34030-7BF3-53C9-71B4-F569AAD71441}</ProjectGuid>
+    <ProjectGuid>{C0B6CAA4-44DA-F8E3-A6D3-D34C3EB89901}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -59,6 +59,7 @@
      <Compile Include="Assets\Code\Editor\Inspectors\UnitInspector.cs" />
      <Compile Include="Assets\Code\PathSystem\Editor\PathInspector.cs" />
      <Compile Include="Assets\Localization\Editor\LocalizationWindow.cs" />
+     <None Include="Assets\Shaders\CycleColor.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Program Files/Unity_17_2_03/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -140,7 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{5D3552FD-BC28-B6F8-0ED6-40F7075E067C}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{834C542D-900F-BAE3-8F19-C772C381C1D6}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,25 @@ namespace TankGame
 {
 	public class CameraFollow : MonoBehaviour
 	{
+		#region Statics
+
+		private static CameraFollow _instance;
+
+		public static CameraFollow Instance
+		{
+			get
+			{
+				if ( _instance == null )
+				{
+					GameObject cameraFollowObject = new GameObject( typeof( CameraFollow ).Name );
+					_instance = cameraFollowObject.AddComponent< CameraFollow >();
+				}
+				return _instance;
+			}
+		}
+
+		#endregion
+
 		[SerializeField]
 		private float _distance;
 
@@ -26,7 +45,11 @@ namespace TankGame
 		{
 			if ( _target == null )
 			{
-				return;
+				Unit unit = GameManager.Instance.PlayerUnit;
+				if( unit != null )
+					_target = unit.transform;
+				else 
+					return;
 			}
 
 			transform.position = CalculatePosition();
