@@ -23,8 +23,8 @@ namespace TankGame.UI
 			HealthUI.Init();
 			ScoreUI = GetComponentInChildren< ScoreUI >();
 			ScoreUI.Init();
-			// LivesUI = GetComponentInChildren< LivesUI >();
-			// LivesUI.Init();
+			LivesUI = GetComponentInChildren< LivesUI >();
+			LivesUI.Init();
 			VictoryUI = GetComponentInChildren< VictoryUI >();
 			VictoryUI.Init();
 		}

@@ -8,13 +8,35 @@ using UnityEngine;
 
 namespace TankGame
 {
-	public class PlayerUnit : Unit 
+	public class PlayerUnit : Unit, INotifyPropertyChanged
 	{
 		[SerializeField]
 		private string _horizontalAxis = "Horizontal";
 		[SerializeField]
 		[Tooltip("The name of the vertical axis")]
 		private string _verticalAxis = "Vertical";
+
+		[SerializeField] private int _lives = 3;
+
+		public int Lives 
+		{
+			get { return _lives; }
+			protected set 
+			{
+				_lives = value;
+				if( Lives < 0 ) 
+				{
+					_lives = 0;
+				}
+				if( LivesLost != null ) 
+				{
+					LivesLost( _lives );
+				}
+				OnPropertyChanged( () => Lives );
+			}
+		}
+
+		public event Action< int > LivesLost;
 
 		private System.Action< PlayerUnit > _deathCallback;
 
@@ -48,6 +70,19 @@ namespace TankGame
 		{
 			base.HandleUnitDied( unit );
 			_deathCallback( this );
+			Lives -= 1;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged< T >( Expression< Func< T > > propertyLambda )
+		{
+			if ( PropertyChanged != null )
+			{
+				PropertyChanged( this,
+					new PropertyChangedEventArgs( Utils.Utils.GetPropertyName( propertyLambda ) ) );
+			}
 		}
 	}
 }

@@ -8,8 +8,9 @@ namespace TankGame.UI
 {
 	public class LivesUI : MonoBehaviour
 	{
-		[SerializeField]
-		private Text _text;
+		[SerializeField] private Text _text;
+
+		private PlayerUnit _unit;
 
 		private const string LivesKey = "lives";
 
@@ -21,23 +22,25 @@ namespace TankGame.UI
 		public void Init()
 		{
 			Debug.Log( "Lives UI initialized" );
-			
-			l10n.LanguageLoaded += OnLanguageLoaded;
-			// Unit unit 
-			// _unit = GameManager.Instance.PlayerUnit as PlayerUnit;
-			GameManager.Instance.LivesLost += OnLivesLost;
-			SetText( GameManager.Instance.Lives );
+		}
+
+		public void SetUnit( Unit unit ) 
+		{
+			l10n.LanguageLoaded += OnLanguageLoaded; 
+			_unit = unit as PlayerUnit;
+			_unit.LivesLost += OnLivesLost;
+			SetText( _unit.Lives );
 		}
 
 		private void OnLanguageLoaded( LangCode currentLanguage)
 		{
-			SetText( GameManager.Instance.ScoringSystem.CurrentScore );
+			SetText( _unit.Lives );
 		}
 
 		private void UnregisterEventListeners()
 		{
 			l10n.LanguageLoaded -= OnLanguageLoaded;
-			GameManager.Instance.LivesLost -= OnLivesLost;
+			_unit.LivesLost -= OnLivesLost;
 		}
 
 		private void OnLivesLost( int lives )

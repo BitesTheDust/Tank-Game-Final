@@ -18,7 +18,7 @@ namespace TankGame
 			yield return new WaitForSeconds( _waitToSpawn );
 
 			PlayerUnit unit = _playerUnit.GetPooledObject();
-			if( unit != null && GameManager.Instance.Lives > 0 )
+			if( unit != null )
 			{
 				PlacePlayer( unit, _respawnPosition, _respawnRotation );
 			}
@@ -41,7 +41,7 @@ namespace TankGame
 			unit.transform.localEulerAngles = rotation;
 			GameManager.Instance.AddUnit( unit );
 
-			Debug.Log( "Spawned Player");
+			Debug.Log( "Spawned Player" );
 		}
 
 		private void InitPlayer( PlayerUnit unit )
@@ -59,7 +59,8 @@ namespace TankGame
 				Debug.LogError( "Could not return the player back to the pool!" );
 			}
 
-			StartCoroutine( Spawn() );
+			if( unit.Lives > 1 ) 
+				StartCoroutine( Spawn() );
 		}
 	}
 } 

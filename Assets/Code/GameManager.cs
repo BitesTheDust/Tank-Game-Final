@@ -9,13 +9,10 @@ using UnityEngine;
 using L10n = TankGame.Localization.Localization;
 using waypoints = TankGame.WaypointSystem;
 using System;
-using System.ComponentModel;
-using JetBrains.Annotations;
-using System.Linq.Expressions;
 
 namespace TankGame
 {
-	public class GameManager : MonoBehaviour, INotifyPropertyChanged
+	public class GameManager : MonoBehaviour
 	{
 		#region Statics
 
@@ -40,24 +37,6 @@ namespace TankGame
 
 		#endregion
 
-		[SerializeField] private int _lives = 3;
-
-		public int Lives 
-		{
-			get { return _lives; }
-			protected set 
-			{
-				_lives = Mathf.Clamp( _lives - value, 0, _lives );
-				if( LivesLost != null ) 
-				{
-					LivesLost( _lives );
-				}
-				OnPropertyChanged( () => Lives );
-			}
-		}
-
-		public event Action< int > LivesLost;
-
 		[SerializeField] private int _winningScore = 100;
 
 		private List< waypoints.Path > _paths;
@@ -65,8 +44,7 @@ namespace TankGame
 
 		private List< Unit > _enemyUnit = new List< Unit >();
 		private Unit _playerUnit = null;
-		private PlayerUnit _player = null;
-		public PlayerUnit PlayerUnit { get { return _player; } }
+		public Unit PlayerUnit { get { return _playerUnit; } }
 
 		private SaveSystem _saveSystem;
 
@@ -141,8 +119,6 @@ namespace TankGame
 			_playerSpawner = FindObjectOfType< PlayerSpawner >();
 			_playerSpawner.Init();
 
-			PlayerUnit.Health.UnitDied += HandleLivesLost;
-
 			_collectableSpawner = FindObjectOfType< CollectableSpawner >();
 			_collectableSpawner.Init();
 
@@ -196,7 +172,7 @@ namespace TankGame
 			else if ( unit is PlayerUnit )
 			{
 				_playerUnit = unit;
-				_player = unit.GetComponent< PlayerUnit >();
+				UI.UI.Current.LivesUI.SetUnit( unit );
 			}
 
 			// Add unit's health to the UI.
@@ -232,19 +208,7 @@ namespace TankGame
 
 		protected void HandleLivesLost( Unit unit ) 
 		{
-			Lives -= 1;
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged< T >( Expression< Func< T > > propertyLambda )
-		{
-			if ( PropertyChanged != null )
-			{
-				PropertyChanged( this,
-					new PropertyChangedEventArgs( Utils.Utils.GetPropertyName( propertyLambda ) ) );
-			}
+			
 		}
 	}
 }

@@ -57,11 +57,6 @@ namespace TankGame.UI
 			}
 		}
 
-		//private void OnUnitDied(Unit obj)
-		//{
-		//	UnregisterEventListeners();
-		//}
-
 		private void UnregisterEventListeners()
 		{
 			l10n.LanguageLoaded -= OnLanguageLoaded;
